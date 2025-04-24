@@ -92,4 +92,47 @@
             android:title="@string/export_data"
             app:icon="@drawable/ic_export" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/header_prometheus_settings"
+        app:iconSpaceReserved="false">
+
+        <EditTextPreference
+            android:key="prometheus_push_url"
+            android:title="@string/prometheus_push_url"
+            android:defaultValue="http://your-prometheus-pushgateway-url:9091"
+            android:inputType="textUri"
+            app:useSimpleSummaryProvider="true"
+            app:icon="@drawable/ic_url" />
+
+        <EditTextPreference
+            android:key="prometheus_auth_username"
+            android:title="@string/prometheus_auth_username"
+            android:defaultValue=""
+            android:inputType="text"
+            app:useSimpleSummaryProvider="true"
+            app:icon="@drawable/ic_username" />
+
+        <EditTextPreference
+            android:key="prometheus_auth_password"
+            android:title="@string/prometheus_auth_password"
+            android:defaultValue=""
+            android:inputType="textPassword"
+            app:useSimpleSummaryProvider="true"
+            app:icon="@drawable/ic_password" />
+
+        <EditTextPreference
+            android:key="prometheus_bearer_token"
+            android:title="@string/prometheus_bearer_token"
+            android:defaultValue=""
+            android:inputType="text"
+            app:useSimpleSummaryProvider="true"
+            app:icon="@drawable/ic_token" />
+
+        <SwitchPreferenceCompat
+            android:key="prometheus_use_ssl"
+            android:title="@string/prometheus_use_ssl"
+            android:defaultValue="false"
+            app:icon="@drawable/ic_ssl" />
+    </PreferenceCategory>
 </PreferenceScreen>

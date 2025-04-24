@@ -116,6 +116,9 @@ internal class MotionService : Service() {
 
             handleStepUpdate()
 
+            // Push live step count to Prometheus
+            pushStepsToPrometheus(mTodaysSteps, isLive = true)
+
             // reset the delayed write runnable
             handler.removeCallbacks(delayedWriteRunnable)
             handler.postDelayed(delayedWriteRunnable, 10_000)
@@ -337,6 +340,13 @@ internal class MotionService : Service() {
             pauseNotificationChannel.description = getString(R.string.notification_description_paused)
             mNotificationManager.createNotificationChannel(pauseNotificationChannel)
         }
+    }
+
+    private fun pushStepsToPrometheus(steps: Int) {
+        val intent = Intent(this, PrometheusExporterService::class.java).apply {
+            putExtra(PrometheusExporterService.KEY_DAILY_STEPS, steps)
+        }
+        startService(intent)
     }
 
     companion object {

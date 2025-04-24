@@ -32,6 +32,7 @@ import java.util.Date
 import java.util.Locale
 import androidx.core.graphics.drawable.toDrawable
 import androidx.preference.EditTextPreference
+import androidx.preference.SwitchPreferenceCompat
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -70,6 +71,34 @@ class SettingsActivity : AppCompatActivity() {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
             val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+            findPreference<EditTextPreference>("prometheus_push_url")?.setOnPreferenceChangeListener { _, newValue ->
+                prefs.edit {
+                    putString("prometheus_push_url", newValue.toString())
+                }
+                true
+            }
+
+            findPreference<EditTextPreference>("prometheus_auth_username")?.setOnPreferenceChangeListener { _, newValue ->
+                prefs.edit {
+                    putString("prometheus_auth_username", newValue.toString())
+                }
+                true
+            }
+
+            findPreference<EditTextPreference>("prometheus_auth_password")?.setOnPreferenceChangeListener { _, newValue ->
+                prefs.edit {
+                    putString("prometheus_auth_password", newValue.toString())
+                }
+                true
+            }
+
+            findPreference<EditTextPreference>("prometheus_bearer_token")?.setOnPreferenceChangeListener { _, newValue ->
+                prefs.edit {
+                    putString("prometheus_bearer_token", newValue.toString())
+                }
+                true
+            }
 
             val currentLocales = AppCompatDelegate.getApplicationLocales()
             val currentLanguage = when {
@@ -196,6 +225,13 @@ class SettingsActivity : AppCompatActivity() {
                     putExtra(Intent.EXTRA_TITLE, fileName)
                 }
                 startActivityForResult(intent, 2)
+                true
+            }
+
+            findPreference<SwitchPreferenceCompat>("prometheus_use_ssl")?.setOnPreferenceChangeListener { _, newValue ->
+                prefs.edit {
+                    putBoolean("prometheus_use_ssl", newValue as Boolean)
+                }
                 true
             }
         }
